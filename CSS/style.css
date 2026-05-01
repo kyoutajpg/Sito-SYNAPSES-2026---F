@@ -1,0 +1,228 @@
+:root {
+    --green:  #13AC51;
+    --blue:   #3F5099;
+    --cyan:   #AFD6E1;
+    --purple: #A79ADB;
+    --yellow: #FDC603;
+    --orange: #FF7230;
+    --white:  #f9f9f9;
+    --black:  #2b2b2b;
+}
+
+@font-face {
+    font-family: 'Adapter Mono PE';
+    src: url('../Fonts/AdapterMonoPE-Variable.woff2') format('woff2');
+    font-weight: 100 700;
+}
+
+@font-face {
+    font-family: 'DIN-BOLD';
+    src: url('../Fonts/DIN-BOLD.ttf') format('truetype');
+    font-weight: 700;
+}
+
+body {
+    font-family: 'Adapter Mono PE', monospace;
+    background-color: var(--white);
+    color: var(--black);
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* ─── HERO 3D ─── */
+#canvas-container {
+    height: 100svh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y;
+    z-index: 1;
+}
+
+#canvas-container > div {
+    pointer-events: none;
+}
+
+.card-3d {
+    backface-visibility: visible;
+    transform-style: preserve-3d;
+    padding: 30px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    pointer-events: auto;
+}
+
+.card-3d h1 { font-weight: 900; text-transform: uppercase; line-height: 0.85; }
+.card-3d h2 { font-weight: 600; text-transform: uppercase; line-height: 1.2; }
+.card-3d p  { font-weight: 100; text-transform: uppercase; margin-top: 15px; line-height: 1; }
+
+/* ─── REDIRECT OVERLAY ─── */
+#redirect-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ─── SEZIONE FESTIVAL (piani 3D) ─── */
+.perspective-scene {
+    perspective: 1500px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.planes-container-3d {
+    transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+    height: 1350px;
+}
+
+@media (min-width: 768px) {
+    .planes-container-3d {
+        height: 700px;
+    }
+}
+
+.trigger-area {
+    transform-style: preserve-3d;
+    position: absolute;
+    width: 85%;
+    max-width: 320px;
+    height: 400px;
+    left: 50% !important;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.trigger-area:nth-child(1) { top: 0px; }
+.trigger-area:nth-child(2) { top: 450px; }
+.trigger-area:nth-child(3) { top: 900px; }
+
+@media (min-width: 768px) {
+    .trigger-area {
+        left: auto !important;
+        transform: none;
+    }
+    .trigger-area:nth-child(1) { left: 6% !important; top: 50px; }
+    .trigger-area:nth-child(2) { left: 50% !important; top: 100px; transform: translateX(-50%); }
+    .trigger-area:nth-child(3) { right: 6% !important; top: 50px; }
+}
+
+.floating-plane {
+    pointer-events: none;
+    transform-style: preserve-3d;
+    height: 100%;
+    width: 100%;
+}
+
+.plane-content {
+    pointer-events: auto;
+    backface-visibility: hidden;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── MAPPA ─── */
+.map-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    perspective: 1000px;
+    padding-top: 40px;
+}
+
+.map-wrapper {
+    position: relative;
+}
+
+.map-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hotspot {
+    position: absolute;
+    cursor: pointer;
+    z-index: 20;
+}
+
+/* info-box inline: uno per ogni mappa, gestito da JS */
+.info-box-inner {
+    position: absolute;
+    width: 150px;
+    padding: 10px;
+    background: var(--white);
+    border-left: 6px solid var(--black);
+    box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 100;
+}
+
+@media (min-width: 768px) {
+    .info-box-inner {
+        width: 200px;
+        padding: 15px;
+    }
+}
+
+  .wf-slideshow-viewport {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        touch-action: pan-y;
+    }
+    .wf-track {
+        display: flex;
+        align-items: flex-start;
+        will-change: transform;
+    }
+    .wf-slide {
+        flex-shrink: 0;
+        width: 80vw;
+        max-width: 650px;
+        padding: 0 0px;
+        cursor: pointer;
+        /* opacity/scale gestiti via GSAP */
+    }
+    .wf-slide .map-container {
+        padding: 64px 0 0px;
+        margin: 0;
+    }
+    /* la barra data colorata sopra ogni mappa */
+    .wf-date-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        margin-bottom: 0;
+        text-align: center;
+    }
+    .wf-date-bar span {
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: var(--black);
+   
+    }     
+    @media (min-width: 768px) {
+       
+      .wf-slide {
+        flex-shrink: 0;
+        width: 90vw;
+        max-width: 950px;
+        padding: 0 0px;
+        cursor: pointer;
+        /* opacity/scale gestiti via GSAP */
+    }
+
+    }
