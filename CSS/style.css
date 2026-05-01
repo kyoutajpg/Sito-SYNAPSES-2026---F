@@ -183,9 +183,13 @@ body {
     }
     .wf-track {
         display: flex;
+        width: max-content !important; /* Il track deve essere largo solo quanto le slide */
         align-items: flex-start;
         will-change: transform;
     }
+
+
+
     .wf-slide {
         flex-shrink: 0;
         width: 80vw;
@@ -255,16 +259,31 @@ section.w-full.pb-20 {
 }
 
 @media (max-width: 768px) {
-    #wf-track {
-        /* Rimuove eventuali margini che spingono fuori il layout */
-        margin: 0 !important; 
-        display: flex !important;
-        align-items: flex-start;
+    /* Blocca la sezione per evitare che la pagina si muova a destra/sinistra */
+    section.w-full {
+        overflow-x: hidden !important;
+        width: 100%;
     }
-    
+
+    /* Il binario deve essere una riga continua senza spazi bianchi iniziali */
+    #wf-track {
+        display: flex !important;
+        padding-left: 32px !important; /* Margine iniziale che simula px-8 */
+        gap: 16px !important; /* Spazio costante tra le slide */
+    }
+
     #wf-track > div[data-slide] {
-        /* Usiamo width fissa per evitare che il browser ricalcoli male lo spazio */
-        flex: 0 0 calc(100vw - 64px) !important; 
+        /* Forza la larghezza: lo schermo meno i due margini da 32px */
         width: calc(100vw - 64px) !important;
+        flex: 0 0 calc(100vw - 64px) !important;
+        max-width: none !important;
+        margin: 0 !important; 
+        padding: 0 !important;
     }
 }
+
+section {
+    overflow-x: hidden !important; /* Blocca ogni fuoriuscita laterale della sezione */
+}
+
+

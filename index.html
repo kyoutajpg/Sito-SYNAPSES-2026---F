@@ -904,28 +904,33 @@
         var slides  = Array.from(document.querySelectorAll('[data-slide]'));
         var current = 1; /* default: 21 Maggio, slide centrale */
 
-   function getOffset(index) {
+    function getOffset(index) {
+    // La larghezza di una slide (che ora è fissa nel CSS)
     var slideW = slides[index].offsetWidth;
-    // IMPORTANTE: il gap qui deve corrispondere alla somma dei margin/padding CSS
-    // Usiamo 20px per il mobile (10px + 10px di margin impostati sopra)
-    var gap = window.innerWidth < 768 ? 20 : 48; 
+    // Il gap che abbiamo impostato nel CSS
+    var gap = window.innerWidth < 768 ? 16 : 48; 
     
-    // Calcola il punto esatto per centrare la slide corrente nello schermo
-    return (window.innerWidth / 2) - (slideW / 2) - (index * (slideW + gap));
-}
-        function updateStates() {
-            slides.forEach(function(s, i) {
-                var active = (i === current);
-                /* opacity e scale via GSAP — pointer-events SEMPRE auto
-                   per non rompere gli hotspot della mappa attiva        */
-                gsap.to(s, {
-                    opacity:  active ? 1 : 0.25,
-                    scale:    active ? 1 : 0.94,
-                    duration: 0.5,
-                    ease:     'expo.out'
-                });
+    /* 
+       A differenza di prima, non usiamo più il centro dello schermo.
+       Spostiamo il binario esattamente della larghezza della slide + il gap.
+       Il valore è negativo perché "tiriamo" il binario a sinistra.
+    */
+    return -(index * (slideW + gap));
+    }
+        
+    function updateStates() {
+        slides.forEach(function(s, i) {
+            var active = (i === current);
+            /* opacity e scale via GSAP — pointer-events SEMPRE auto
+                per non rompere gli hotspot della mappa attiva        */
+            gsap.to(s, {
+                opacity:  active ? 1 : 0.25,
+                scale:    active ? 1 : 0.94,
+                duration: 0.5,
+                ease:     'expo.out'
             });
-        }
+        });
+    }
 
         function goTo(index) {
             if (index === current) return;
@@ -935,6 +940,7 @@
         }
 
         function initSlideshow() {
+            
             gsap.set(track, { x: getOffset(current) });
             updateStates();
 
