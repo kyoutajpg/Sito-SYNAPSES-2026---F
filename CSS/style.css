@@ -226,3 +226,14 @@ body {
     }
 
     }
+
+    @media (max-width: 767px) {
+    .shrink-0.w-\[70vw\] {
+        width: 90vw !important; /* Porta la larghezza al 90% dello schermo */
+    }
+    
+    .info-box-inner {
+        width: 130px; /* Riduce leggermente il box info per non coprire tutta la mappa */
+        font-size: 10px;
+    }
+}
