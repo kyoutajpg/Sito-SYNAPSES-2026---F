@@ -248,3 +248,23 @@ body {
         overflow: hidden !important;
     }
 }
+
+/* Correzione specifica per la sezione Wayfinding */
+section.w-full.pb-20 {
+    overflow: hidden !important; /* Taglia il "gioco" del binario track */
+}
+
+@media (max-width: 768px) {
+    #wf-track {
+        /* Rimuove eventuali margini che spingono fuori il layout */
+        margin: 0 !important; 
+        display: flex !important;
+        align-items: flex-start;
+    }
+    
+    #wf-track > div[data-slide] {
+        /* Usiamo width fissa per evitare che il browser ricalcoli male lo spazio */
+        flex: 0 0 calc(100vw - 64px) !important; 
+        width: calc(100vw - 64px) !important;
+    }
+}
