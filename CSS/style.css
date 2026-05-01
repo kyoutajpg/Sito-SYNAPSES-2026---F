@@ -181,13 +181,17 @@ body {
         position: relative;
         touch-action: pan-y;
     }
-    .wf-track {
-        display: flex;
-        width: max-content !important; /* Il track deve essere largo solo quanto le slide */
-        align-items: flex-start;
-        will-change: transform;
-    }
+  #wf-track {
+    display: flex !important;
+    gap: 48px; /* Gap standard per desktop */
+    padding-left: 0; 
+}
 
+#wf-track > div[data-slide] {
+    width: 70vw;
+    max-width: 900px;
+    flex-shrink: 0;
+}
 
 
     .wf-slide {
@@ -231,54 +235,26 @@ body {
 
     }
 
-    @media (max-width: 768px) {
-    /* Imposta la slide per stare esattamente dentro i margini px-8 (32px per lato) */
-    #wf-track > div[data-slide] {
-        width: calc(100vw - 64px) !important; 
-        max-width: none !important;
-        margin: 0 10px !important; /* Piccolo respiro tra le slide */
-        padding: 0 !important;
-    }
-
-    /* Rimuoviamo ogni trasformazione scale che causa lo sfuocato/zoom */
-    .map-img {
-        width: 100% !important;
-        height: auto !important;
-        transform: none !important; 
-    }
-
-    /* Nasconde l'overflow per evitare scroll orizzontali strani */
-    .map-wrapper {
-        overflow: hidden !important;
-    }
-}
-
 /* Correzione specifica per la sezione Wayfinding */
 section.w-full.pb-20 {
     overflow: hidden !important; /* Taglia il "gioco" del binario track */
 }
 
 @media (max-width: 768px) {
-    /* Blocca la sezione per evitare che la pagina si muova a destra/sinistra */
-    section.w-full {
+   section.w-full {
         overflow-x: hidden !important;
-        width: 100%;
     }
 
-    /* Il binario deve essere una riga continua senza spazi bianchi iniziali */
     #wf-track {
-        display: flex !important;
-        padding-left: 32px !important; /* Margine iniziale che simula px-8 */
-        gap: 16px !important; /* Spazio costante tra le slide */
+        /* Questo simula il margine px-8 di 32px solo su mobile */
+        padding-left: 32px !important; 
+        gap: 16px !important; 
     }
 
     #wf-track > div[data-slide] {
-        /* Forza la larghezza: lo schermo meno i due margini da 32px */
         width: calc(100vw - 64px) !important;
         flex: 0 0 calc(100vw - 64px) !important;
         max-width: none !important;
-        margin: 0 !important; 
-        padding: 0 !important;
     }
 }
 

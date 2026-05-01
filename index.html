@@ -904,19 +904,21 @@
         var slides  = Array.from(document.querySelectorAll('[data-slide]'));
         var current = 1; /* default: 21 Maggio, slide centrale */
 
-    function getOffset(index) {
-    // La larghezza di una slide (che ora è fissa nel CSS)
+   function getOffset(index) {
     var slideW = slides[index].offsetWidth;
-    // Il gap che abbiamo impostato nel CSS
-    var gap = window.innerWidth < 768 ? 16 : 48; 
-    
-    /* 
-       A differenza di prima, non usiamo più il centro dello schermo.
-       Spostiamo il binario esattamente della larghezza della slide + il gap.
-       Il valore è negativo perché "tiriamo" il binario a sinistra.
-    */
-    return -(index * (slideW + gap));
+    var isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+        // Logica Mobile: Allineata al margine sinistro (32px)
+        var gap = 16;
+        return -(index * (slideW + gap));
+    } else {
+        // Logica Desktop: Centrata perfettamente nello schermo
+        var gap = 48;
+        // Calcolo originale per la centratura
+        return (window.innerWidth / 2) - (slideW / 2) - (index * (slideW + gap));
     }
+}
         
     function updateStates() {
         slides.forEach(function(s, i) {
